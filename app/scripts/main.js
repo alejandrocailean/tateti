@@ -25,6 +25,13 @@ var controlarGanador = function(){
     hayGanador = hayGanador || $(this).find('[data-jugador='+jugadorActual()+']').length == 3;
   });
 
+  if(!hayGanador){
+    // Control de columnas
+    for(var i=1;i<=3;i++){
+      hayGanador = hayGanador || $('table.tateti td[data-columna='+i+'][data-jugador='+jugadorActual()+']').length == 3;
+    }
+  }
+
   var casillasJugadas = $('[data-jugador]').length;
   if(hayGanador){
     $('table.tateti').find('td').unbind();
