@@ -19,8 +19,18 @@ var mensajeTurno = function(jugador){
 };
 
 var controlarGanador = function(){
+  // Control de filas
+  var hayGanador = false;
+  $('table.tateti tr').each(function(){
+    hayGanador = hayGanador || $(this).find('[data-jugador='+jugadorActual()+']').length == 3;
+  });
+
   var casillasJugadas = $('[data-jugador]').length;
-  if(casillasJugadas==9){
+  if(hayGanador){
+    $('table.tateti').find('td').unbind();
+    alert('¡' + jugadorActual().toUpperCase() + ' ha ganado con '
+      + casillasJugadas + ' casillas jugadas!');
+  }else if(casillasJugadas==9){
     alert('¡Ha sido un empate!')
   }
 }
@@ -55,9 +65,11 @@ $(document).ready(function(){
   $(window).on('resize',function(){
     $('table.tateti td').each(function(){
       $(this).removeAttr('style');
+      var ancho = $('#contenedor').width() / 3;
+      var alto = ancho;
       $(this).css({
-        width: $(this).outerWidth(),
-        height: $(this).outerWidth()
+        width: ancho,
+        height: alto
       });
     });
   });
