@@ -44,6 +44,15 @@ var controlarGanador = function(){
     hayGanador = contador==3;
   }
 
+  if(!hayGanador){
+    // Control de diagonal secundaria
+    var contador = 0;
+    for(var i=1;i<=3;i++){
+      contador += $('table.tateti tr[data-fila='+i+'] td[data-columna='+(4-i)+'][data-jugador='+jugadorActual()+']').length;
+    }
+    hayGanador = contador==3;
+  }
+
   var casillasJugadas = $('[data-jugador]').length;
   if(hayGanador){
     $('table.tateti').find('td').unbind();
