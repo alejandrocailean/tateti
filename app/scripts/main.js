@@ -1,5 +1,5 @@
 var jugadores = ['x','o'];
-var indiceJugadorActual = -1;
+var indiceJugadorActual;
 var jugadorActual = function(){
   return jugadores[indiceJugadorActual];
 };
@@ -32,6 +32,15 @@ var controlarGanador = function(){
     }
   }
 
+  if(!hayGanador){
+    // Control de diagonal principal
+    var contador = 0;
+    for(var i=1;i<=3;i++){
+      contador += $('table.tateti tr[data-fila='+i+'] td[data-columna='+i+'][data-jugador='+jugadorActual()+']').length;
+    }
+    hayGanador = contador==3;
+  }
+
   var casillasJugadas = $('[data-jugador]').length;
   if(hayGanador){
     $('table.tateti').find('td').unbind();
@@ -43,6 +52,7 @@ var controlarGanador = function(){
 }
 
 var jugar = function(){
+  indiceJugadorActual = -1;
   $('#contenedor').empty();
   var tablero = $('#tablero-ejemplo').clone();
   tablero.removeAttr('id');
