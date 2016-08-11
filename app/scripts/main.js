@@ -4,13 +4,16 @@ var jugadorActual = function(){
   return jugadores[indiceJugadorActual];
 };
 var siguienteJugador = function(){
-  controlarGanador();
+  if(controlarGanador()){
+    return;
+  }
 
   if(indiceJugadorActual<1){
     indiceJugadorActual++;
   }else{
     indiceJugadorActual = 0;
   }
+
   $('#titulo').html(mensajeTurno(jugadorActual()));
 };
 
@@ -46,9 +49,14 @@ var controlarGanador = function(){
     $('table.tateti').find('td').unbind();
     alert('¡' + jugadorActual().toUpperCase() + ' ha ganado con '
       + casillasJugadas + ' casillas jugadas!');
+    $('#titulo').html('Ganó ' + jugadorActual().toUpperCase());
   }else if(casillasJugadas==9){
     alert('¡Ha sido un empate!')
+    $('#titulo').html('Empate :-|');
+    hayGanador = true;
   }
+
+  return hayGanador;
 }
 
 var jugar = function(){
